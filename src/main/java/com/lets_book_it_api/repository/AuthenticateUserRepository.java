@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface AuthenticateUserRepository extends MongoRepository<AuthenticateRequest,String>
 {
     @Query("{ 'email' : ?0} }")
-    AuthenticationResponse findUserByEmail(String email, String password);
+    AuthenticationResponse findUserByEmail(String email);
 }

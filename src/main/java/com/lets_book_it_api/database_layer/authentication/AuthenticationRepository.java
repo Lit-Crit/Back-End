@@ -1,4 +1,4 @@
-package com.lets_book_it_api.database_layer;
+package com.lets_book_it_api.database_layer.authentication;
 
 import com.lets_book_it_api.data_objects.authentication.AuthenticateRequest;
 import com.lets_book_it_api.data_objects.authentication.AuthenticationResponse;
@@ -31,7 +31,7 @@ public class AuthenticationRepository
 
     public AuthenticationResponse authenticateUser(AuthenticateRequest request)
     {
-        AuthenticationResponse user = authenticateUserRepository.findUserByEmail(request.getEmail(), request.getPassword());
+        AuthenticationResponse user = authenticateUserRepository.findUserByEmail(request.getEmail());
         return user;
     }
 

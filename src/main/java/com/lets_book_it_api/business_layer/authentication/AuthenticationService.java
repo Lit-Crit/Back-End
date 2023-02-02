@@ -5,7 +5,9 @@ import com.lets_book_it_api.data_objects.authentication.AuthenticateRequest;
 import com.lets_book_it_api.data_objects.authentication.AuthenticationResponse;
 import com.lets_book_it_api.data_objects.register.RegisterRequest;
 import com.lets_book_it_api.data_objects.register.RegisterResponse;
-import com.lets_book_it_api.database_layer.AuthenticationRepository;
+import com.lets_book_it_api.data_objects.user.*;
+import com.lets_book_it_api.database_layer.authentication.AuthenticationRepository;
+import com.lets_book_it_api.database_layer.user.UserDatabaseRepository;
 import com.lets_book_it_api.validations.EmailValidator;
 import com.lets_book_it_api.validations.NameValidator;
 import com.lets_book_it_api.validations.PasswordValidator;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Service
@@ -23,6 +26,7 @@ public class AuthenticationService
     private final AuthenticationRepository authenticationRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final UserDatabaseRepository userDatabaseRepository;
     public RegisterResponse register(RegisterRequest request)
     {
         RegisterResponse registerResponse = new RegisterResponse();
@@ -38,6 +42,8 @@ public class AuthenticationService
         {
             return registerResponse;
         }
+
+        addUser(request);
 
         var jwtToken = jwtService.generateToken(request.getEmail());
 
@@ -127,5 +133,30 @@ public class AuthenticationService
         }
 
         return true;
+    }
+
+    private void addUser(RegisterRequest registerRequest)
+    {
+        var user = UserDTO.builder()
+                .id(registerRequest.getId())
+                .name(registerRequest.getName())
+                .email(registerRequest.getEmail())
+                .password(registerRequest.getPassword())
+                .age(0)
+                .address("")
+                .state("")
+                .country("")
+                .noOfBooksReviewed(0)
+                .noOfBooksRated(0)
+                .interestedBookCategory(new ArrayList<InterestedBookCategory>())
+                .interestedAuthors(new ArrayList<InterestedAuthors>())
+                .previousReadBooks(new ArrayList<PreviousReadBooks>())
+                .currentBooks(new ArrayList<CurrentBooks>())
+                .ratedBooks(new ArrayList<RatedBooks>())
+                .reviewedBooks(new ArrayList<ReviewedBooks>())
+                .wishlists(new ArrayList<Wishlist>())
+                .build();
+
+        userDatabaseRepository.addUser(user);
     }
 }

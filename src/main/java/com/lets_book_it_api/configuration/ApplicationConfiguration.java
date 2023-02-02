@@ -1,8 +1,11 @@
 package com.lets_book_it_api.configuration;
 
+import com.lets_book_it_api.data_objects.authentication.AuthenticationResponse;
 import com.lets_book_it_api.data_objects.credentials.CredentialsRequest;
 import com.lets_book_it_api.data_objects.user.UserDTO;
+import com.lets_book_it_api.repository.AuthenticateUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,17 +21,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfiguration
 {
-    //private final UserRepository repository;
+    @Autowired
+    private final AuthenticateUserRepository authenticateUserRepository;
     @Bean
     public UserDetailsService userDetailsService()
     {
         return username ->
         {
-            if(username.equals("harsh@gmail.com"))
+            String userMail = "" + username;
+            AuthenticationResponse user = authenticateUserRepository.findUserByEmail(userMail);
+            if(user != null && user.getEmail().equals(userMail))
             {
-                CredentialsRequest user = new CredentialsRequest();
-                user.setEmail(username);
-                user.setPassword("hpHarsh");
                 return user;
             }
             else

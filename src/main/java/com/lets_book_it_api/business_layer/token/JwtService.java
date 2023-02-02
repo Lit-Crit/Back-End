@@ -34,13 +34,13 @@ public class JwtService
     public String generateToken(Map<String, Object> extraClaims,String setSubject)
     {
         return Jwts
-                .builder()
-                .setClaims(extraClaims)
-                .setSubject(setSubject)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-                .compact();
+                    .builder()
+                    .setClaims(extraClaims)
+                    .setSubject(setSubject)
+                    .setIssuedAt(new Date(System.currentTimeMillis()))
+                    .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                    .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                    .compact();
     }
     public boolean isTokenValid(String token, UserDetails userDetails)
     {
@@ -61,7 +61,7 @@ public class JwtService
                 .parserBuilder()
                 .setSigningKey(getSignInKey())
                 .build()
-                .parseClaimsJwt(token)
+                .parseClaimsJws(token)
                 .getBody();
     }
     private Key getSignInKey()
