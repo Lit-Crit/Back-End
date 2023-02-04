@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public class NameValidator
 {
-    private static final String emailRegex = "^[a-zA-Z0-9 ]*$";
+    private static final String nameRegex = "^[a-zA-Z0-9 ]*$";
     private static final Integer nameLength = 2;
     public static boolean isNameValidBoolean(String name)
     {
@@ -12,7 +12,7 @@ public class NameValidator
         {
             return false;
         }
-        return Pattern.compile(emailRegex)
+        return Pattern.compile(nameRegex)
                 .matcher(name)
                 .matches();
     }

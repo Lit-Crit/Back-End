@@ -5,7 +5,6 @@ import com.lets_book_it_api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -38,5 +37,10 @@ public class UserDatabaseRepository
             return new UserDTO();
         }
         return userOptional.get();
+    }
+    public boolean updateUser(UserDTO user)
+    {
+        userRepository.save(user);
+        return true;
     }
 }

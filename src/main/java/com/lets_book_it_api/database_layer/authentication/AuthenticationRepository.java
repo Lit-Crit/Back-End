@@ -35,7 +35,7 @@ public class AuthenticationRepository
         return user;
     }
 
-    private boolean isUserPresent(String email)
+    public boolean isUserPresent(String email)
     {
         return registerRepository.findUserByEmail(email) != null;
     }
