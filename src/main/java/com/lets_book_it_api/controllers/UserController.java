@@ -15,7 +15,7 @@ public class UserController
     @Autowired
     private final UserService userService;
     @GetMapping("/get")
-    public ResponseEntity<UserDTO> findUserById()
+    public ResponseEntity<UserDTO> getUser()
     {
         return ResponseEntity.ok(userService.getUser());
     }

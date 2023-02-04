@@ -4,7 +4,6 @@ import com.lets_book_it_api.business_layer.token.JwtService;
 import com.lets_book_it_api.common.JwtUniversal;
 import com.lets_book_it_api.data_objects.user.UserDTO;
 import com.lets_book_it_api.database_layer.user.UserDatabaseRepository;
-import com.lets_book_it_api.validations.UserIdValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
